@@ -1,7 +1,9 @@
 import { User } from '@/databases/models';
 import { UserUpdateDto } from '@/dto/user/user-update.dto';
 import { IUserService } from './user.service';
+import { injectable } from 'inversify';
 
+@injectable()
 export default class UserServiceImpl implements IUserService {
   async getAll(): Promise<User[]> {
     const data = await User.findAll();

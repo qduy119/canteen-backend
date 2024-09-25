@@ -1,8 +1,12 @@
+import { TYPES } from '@/container/types';
 import { IFoodService } from '@/services/food/food.service';
 import { NextFunction, Request, Response } from 'express';
+import { inject } from 'inversify';
 
 export default class ItemController {
-  constructor(private readonly itemService: IFoodService) {}
+  constructor(
+    @inject(TYPES.FoodService) private readonly itemService: IFoodService
+  ) {}
 
   getAll = async (req: Request, res: Response, next: NextFunction) => {
     try {

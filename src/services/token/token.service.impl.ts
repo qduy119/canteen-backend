@@ -1,7 +1,9 @@
 import { Token } from '@/databases/models';
 import { TokenDto } from '@/dto/token/token.dto';
 import { ITokenService } from './token.service';
+import { injectable } from 'inversify';
 
+@injectable()
 export default class TokenServiceImpl implements ITokenService {
   async find(payload: TokenDto): Promise<Token> {
     const found = await Token.findOne({

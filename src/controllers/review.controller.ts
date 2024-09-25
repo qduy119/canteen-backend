@@ -1,8 +1,12 @@
+import { TYPES } from '@/container/types';
 import { IReviewService } from '@/services/review/review.service';
 import { NextFunction, Request, Response } from 'express';
+import { inject } from 'inversify';
 
 export default class ReviewController {
-  constructor(private readonly reviewService: IReviewService) {}
+  constructor(
+    @inject(TYPES.ReviewService) private readonly reviewService: IReviewService
+  ) {}
 
   create = async (req: Request, res: Response, next: NextFunction) => {
     try {

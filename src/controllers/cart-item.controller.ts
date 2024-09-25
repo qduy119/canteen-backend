@@ -1,8 +1,13 @@
+import { TYPES } from '@/container/types';
 import { ICartItemService } from '@/services/cart-item/cart-item.service';
 import { NextFunction, Request, Response } from 'express';
+import { inject } from 'inversify';
 
 export default class CartItemController {
-  constructor(private readonly cartItemService: ICartItemService) {}
+  constructor(
+    @inject(TYPES.CartItemService)
+    private readonly cartItemService: ICartItemService
+  ) {}
 
   getAll = async (req: Request, res: Response, next: NextFunction) => {
     try {

@@ -1,12 +1,16 @@
 import { Application, Router } from 'express';
 import { protect, restrictTo } from '@/middlewares/auth';
-import { CategoryServiceImpl } from '@/services';
 import { CategoryController } from '@/controllers';
+import { myContainer } from '@/container/inversify.config';
+import { ICategoryService } from '@/services/category/category.service';
+import { TYPES } from '@/container/types';
 
 export const configure = (app: Application) => {
   const router = Router({ mergeParams: true });
 
-  const categoryService = new CategoryServiceImpl();
+  const categoryService = myContainer.get<ICategoryService>(
+    TYPES.CategoryService
+  );
   const categoryController = new CategoryController(categoryService);
 
   router

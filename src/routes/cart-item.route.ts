@@ -1,18 +1,16 @@
 import { Application, Router } from 'express';
 import { protect, restrictTo } from '@/middlewares/auth';
-import {
-  ItemServiceImpl,
-  CartItemServiceImpl,
-  NodemailerServiceImpl
-} from '@/services';
 import { CartItemController } from '@/controllers';
+import { myContainer } from '@/container/inversify.config';
+import { ICartItemService } from '@/services/cart-item/cart-item.service';
+import { TYPES } from '@/container/types';
 
 export const configure = (app: Application) => {
   const router = Router({ mergeParams: true });
 
-  const nodemailerService = new NodemailerServiceImpl();
-  const itemService = new ItemServiceImpl(nodemailerService);
-  const cartItemService = new CartItemServiceImpl(itemService);
+  const cartItemService = myContainer.get<ICartItemService>(
+    TYPES.CartItemService
+  );
   const cartItemController = new CartItemController(cartItemService);
 
   router.use(protect);

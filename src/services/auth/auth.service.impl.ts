@@ -1,9 +1,7 @@
-import "reflect-metadata";
-
 import { Response } from 'express';
 import { v4 as uuid } from 'uuid';
 import * as jwt from 'jsonwebtoken';
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { promisify } from 'util';
 import { Token, User } from '@/databases/models';
 import { CustomError } from '@/utils/error';
@@ -21,12 +19,15 @@ import {
 } from '@/utils/token';
 import { RefreshTokenResDto } from '@/dto/user/refresh-token-res.dto';
 import { ITokenService } from '../token/token.service';
+import { TYPES } from '@/container/types';
 
 const verifyAsync = promisify(jwt.verify.bind(jwt));
 
 @injectable()
 export default class AuthServiceImpl implements IAuthService {
-  constructor(private readonly tokenService: ITokenService) {}
+  constructor(
+    @inject(TYPES.TokenService) private readonly tokenService: ITokenService
+  ) {}
 
   async authenticate(payload: LoginReqDto): Promise<LoginResDto> {
     const { email, password } = payload;

@@ -1,8 +1,11 @@
+import { TYPES } from '@/container/types';
 import { ISeatReservationService } from '@/services/seat-reservation/seat-reservation.service';
 import { NextFunction, Request, Response } from 'express';
+import { inject } from 'inversify';
 
 export default class SeatReservationController {
   constructor(
+    @inject(TYPES.SeatReservationService)
     private readonly seatReservationService: ISeatReservationService
   ) {}
 

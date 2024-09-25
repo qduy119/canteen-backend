@@ -1,9 +1,13 @@
+import { TYPES } from '@/container/types';
 import { IAuthService } from '@/services/auth/auth.service';
 import { CustomError } from '@/utils/error';
 import { NextFunction, Request, Response } from 'express';
+import { inject } from 'inversify';
 
 export default class AuthController {
-  constructor(private readonly authService: IAuthService) {}
+  constructor(
+    @inject(TYPES.AuthService) private readonly authService: IAuthService
+  ) {}
 
   authenticate = async (req: Request, res: Response, next: NextFunction) => {
     try {

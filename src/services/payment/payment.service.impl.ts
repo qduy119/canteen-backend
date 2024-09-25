@@ -6,7 +6,9 @@ import { Payment } from '@/databases/models';
 import { IPaymentService } from './payment.service';
 import { PaymentCreateDto } from '@/dto/payment/payment-create.dto';
 import { PaymentUpdateDto } from '@/dto/payment/payment-update.dto';
+import { injectable } from 'inversify';
 
+@injectable()
 export default class PaymentServiceImpl implements IPaymentService {
   async getAll(userId: string): Promise<Payment[]> {
     let data: Payment[];

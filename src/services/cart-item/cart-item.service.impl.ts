@@ -4,9 +4,14 @@ import { ICartItemService } from './cart-item.service';
 import { CartItemUpdateDto } from '@/dto/cart-item/create-item-update.dto';
 import { CartItemCreateDto } from '@/dto/cart-item/cart-item-create.dto';
 import { IFoodService } from '../food/food.service';
+import { inject, injectable } from 'inversify';
+import { TYPES } from '@/container/types';
 
+@injectable()
 export default class CartItemService implements ICartItemService {
-  constructor(private readonly itemService: IFoodService) {}
+  constructor(
+    @inject(TYPES.FoodService) private readonly itemService: IFoodService
+  ) {}
 
   async getAll(userId: string) {
     const data = await CartItem.findAll({

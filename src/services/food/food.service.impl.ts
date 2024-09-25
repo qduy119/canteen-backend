@@ -5,9 +5,15 @@ import { INodemailerService } from '../nodemailer/nodemailer.service';
 import { IFoodService } from './food.service';
 import { ItemCreateDto } from '@/dto/item/item-create.dto';
 import { ItemUpdateDto } from '@/dto/item/item-update.dto';
+import { inject, injectable } from 'inversify';
+import { TYPES } from '@/container/types';
 
+@injectable()
 export default class ItemServiceImpl implements IFoodService {
-  constructor(private readonly nodemailerService: INodemailerService) {}
+  constructor(
+    @inject(TYPES.NodemailerService)
+    private readonly nodemailerService: INodemailerService
+  ) {}
 
   async getAll(
     page: number | undefined,

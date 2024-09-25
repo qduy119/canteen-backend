@@ -1,8 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import { IPaymentService } from '@/services/payment/payment.service';
+import { inject } from 'inversify';
+import { TYPES } from '@/container/types';
 
 export default class PaymentController {
-  constructor(private readonly paymentService: IPaymentService) {}
+  constructor(
+    @inject(TYPES.PaymentService)
+    private readonly paymentService: IPaymentService
+  ) {}
 
   getAll = async (req: Request, res: Response, next: NextFunction) => {
     try {

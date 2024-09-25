@@ -1,14 +1,15 @@
 import { Application, Router } from 'express';
 import { protect, restrictTo } from '@/middlewares/auth';
-import { AuthServiceImpl, TokenServiceImpl } from '@/services';
 import { AuthController } from '@/controllers';
 import * as passport from 'passport';
+import { myContainer } from '@/container/inversify.config';
+import { IAuthService } from '@/services/auth/auth.service';
+import { TYPES } from '@/container/types';
 
 export const configure = (app: Application) => {
   const router = Router({ mergeParams: true });
 
-  const tokenService = new TokenServiceImpl();
-  const authService = new AuthServiceImpl(tokenService);
+  const authService = myContainer.get<IAuthService>(TYPES.AuthService);
   const authController = new AuthController(authService);
 
   router.route('/authenticate').post(authController.authenticate);

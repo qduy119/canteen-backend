@@ -1,8 +1,12 @@
+import { TYPES } from '@/container/types';
 import { ICouponService } from '@/services/coupon/coupon.service';
 import { NextFunction, Request, Response } from 'express';
+import { inject } from 'inversify';
 
 export default class CouponController {
-  constructor(private readonly couponService: ICouponService) {}
+  constructor(
+    @inject(TYPES.CouponService) private readonly couponService: ICouponService
+  ) {}
 
   getAll = async (req: Request, res: Response, next: NextFunction) => {
     try {

@@ -1,12 +1,14 @@
 import { Application, Router } from 'express';
 import { protect, restrictTo } from '@/middlewares/auth';
-import { CouponServiceImpl } from '@/services';
 import { CouponController } from '@/controllers';
+import { myContainer } from '@/container/inversify.config';
+import { ICouponService } from '@/services/coupon/coupon.service';
+import { TYPES } from '@/container/types';
 
 export const configure = (app: Application) => {
   const router = Router({ mergeParams: true });
 
-  const couponService = new CouponServiceImpl();
+  const couponService = myContainer.get<ICouponService>(TYPES.CouponService);
   const couponController = new CouponController(couponService);
 
   router.use(protect);

@@ -1,7 +1,9 @@
 import { INodemailerService } from './nodemailer.service';
 import * as nodemailer from 'nodemailer';
 import * as htmlToText from 'html-to-text';
+import { injectable } from 'inversify';
 
+@injectable()
 export default class NodemailerServiceImpl implements INodemailerService {
   private _transporter: nodemailer.Transporter;
 

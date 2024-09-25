@@ -1,8 +1,12 @@
+import { TYPES } from '@/container/types';
 import { IOrderService } from '@/services/order/order.service';
 import { NextFunction, Request, Response } from 'express';
+import { inject } from 'inversify';
 
 export default class OrderController {
-  constructor(private readonly orderService: IOrderService) {}
+  constructor(
+    @inject(TYPES.OrderService) private readonly orderService: IOrderService
+  ) {}
 
   getAll = async (req: Request, res: Response, next: NextFunction) => {
     try {

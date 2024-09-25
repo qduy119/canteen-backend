@@ -2,7 +2,9 @@ import { Category } from '@/databases/models';
 import { CategoryCreateDto } from '@/dto/category/category-create.dto';
 import { CategoryUpdateDto } from '@/dto/category/category-update.dto';
 import { ICategoryService } from './category.service';
+import { injectable } from 'inversify';
 
+@injectable()
 export default class CategoryServiceImpl implements ICategoryService {
   async getAll(): Promise<Category[]> {
     const data = await Category.findAll();

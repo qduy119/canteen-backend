@@ -1,8 +1,13 @@
+import { TYPES } from '@/container/types';
 import { ICategoryService } from '@/services/category/category.service';
 import { NextFunction, Request, Response } from 'express';
+import { inject } from 'inversify';
 
 export default class CategoryController {
-  constructor(private readonly categoryService: ICategoryService) {}
+  constructor(
+    @inject(TYPES.CategoryService)
+    private readonly categoryService: ICategoryService
+  ) {}
 
   getAll = async (req: Request, res: Response, next: NextFunction) => {
     try {

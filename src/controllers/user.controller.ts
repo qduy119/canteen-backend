@@ -1,8 +1,12 @@
+import { TYPES } from '@/container/types';
 import { IUserService } from '@/services/user/user.service';
 import { NextFunction, Request, Response } from 'express';
+import { inject } from 'inversify';
 
 export default class UserController {
-  constructor(private readonly userService: IUserService) {}
+  constructor(
+    @inject(TYPES.UserService) private readonly userService: IUserService
+  ) {}
 
   getMe = async (req: Request, res: Response, next: NextFunction) => {
     try {

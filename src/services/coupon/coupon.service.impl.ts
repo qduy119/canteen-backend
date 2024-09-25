@@ -4,7 +4,9 @@ import { Coupon } from '@/databases/models';
 import { CouponCreateDto } from '@/dto/coupon/coupon-create.dto';
 import { CouponUpdateDto } from '@/dto/coupon/coupon-update.dto';
 import { ICouponService } from './coupon.service';
+import { injectable } from 'inversify';
 
+@injectable()
 export default class CouponServiceImpl implements ICouponService {
   async getAll(): Promise<Coupon[]> {
     const data = await Coupon.findAll({

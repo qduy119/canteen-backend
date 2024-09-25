@@ -1,12 +1,14 @@
 import { Application, Router } from 'express';
 import { protect, restrictTo } from '@/middlewares/auth';
-import { PaymentServiceImpl } from '@/services';
 import { PaymentController } from '@/controllers';
+import { myContainer } from '@/container/inversify.config';
+import { IPaymentService } from '@/services/payment/payment.service';
+import { TYPES } from '@/container/types';
 
 export const configure = (app: Application) => {
   const router = Router({ mergeParams: true });
 
-  const paymentService = new PaymentServiceImpl();
+  const paymentService = myContainer.get<IPaymentService>(TYPES.PaymentService);
   const paymentController = new PaymentController(paymentService);
 
   router.use(protect);

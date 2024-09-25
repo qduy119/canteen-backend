@@ -1,7 +1,9 @@
 import { ReviewCreateDto } from '@/dto/review/review-create.dto';
 import { IReviewService } from './review.service';
 import { Item, OrderItem, Review } from '@/databases/models';
+import { injectable } from 'inversify';
 
+@injectable()
 export default class ReviewServiceImpl implements IReviewService {
   async create(payload: ReviewCreateDto): Promise<void> {
     const { rating: reviewRating, orderItemId } = payload;

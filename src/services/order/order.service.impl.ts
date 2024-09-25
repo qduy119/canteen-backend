@@ -7,12 +7,18 @@ import { IOrderItemService } from '../order-item/order-item.service';
 import { ICartItemService } from '../cart-item/cart-item.service';
 import { ISeatReservationService } from '../seat-reservation/seat-reservation.service';
 import { ICouponService } from '../coupon/coupon.service';
+import { inject, injectable } from 'inversify';
+import { TYPES } from '@/container/types';
 
+@injectable()
 export default class OrderServiceImpl implements IOrderService {
   constructor(
+    @inject(TYPES.OrderItemService)
     private readonly orderItemService: IOrderItemService,
+    @inject(TYPES.CartItemService)
     private readonly cartItemService: ICartItemService,
-    private readonly couponService: ICouponService,
+    @inject(TYPES.CouponService) private readonly couponService: ICouponService,
+    @inject(TYPES.SeatReservationService)
     private readonly seatReservationService: ISeatReservationService
   ) {}
 
