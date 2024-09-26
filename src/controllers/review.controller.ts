@@ -22,8 +22,8 @@ export default class ReviewController {
   };
   isRated = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { orderItemId: id } = req.query;
-      const data = await this.reviewService.isRated(Number(id));
+      const { orderItemId } = req.params;
+      const data = await this.reviewService.isRated(Number(orderItemId));
       res.status(200).json(data);
     } catch (error) {
       next(error);

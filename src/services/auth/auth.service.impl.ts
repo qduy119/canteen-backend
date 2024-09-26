@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import { v4 as uuid } from 'uuid';
-import * as jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { inject, injectable } from 'inversify';
 import { promisify } from 'util';
 import { Token, User } from '@/databases/models';

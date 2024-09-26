@@ -1,4 +1,4 @@
-import * as express from 'express';
+import express from 'express';
 import * as Middleware from '@/middlewares/middleware';
 import * as Logger from '@/middlewares/logger';
 import * as Swagger from '@/middlewares/swagger';

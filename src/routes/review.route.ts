@@ -22,7 +22,7 @@ export const configure = (app: Application) => {
       reviewController.create
     );
   router
-    .route('/check-rating/:id')
+    .route('/check-rating/:orderItemId')
     .get(restrictTo('Customer'), reviewController.isRated);
 
   app.use('/api/review', router);

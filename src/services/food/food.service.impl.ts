@@ -1,8 +1,10 @@
 import { Op } from 'sequelize';
-import { Item, OrderItem, Review, User } from '@/databases/models';
+import { Item } from '@/databases/models';
 import sequelize from '@/databases/connection';
 import { INodemailerService } from '../nodemailer/nodemailer.service';
 import { IFoodService } from './food.service';
+import { IReviewService } from '../review/review.service';
+import { IUserService } from '../user/user.service';
 import { ItemCreateDto } from '@/dto/item/item-create.dto';
 import { ItemUpdateDto } from '@/dto/item/item-update.dto';
 import { inject, injectable } from 'inversify';
@@ -12,7 +14,11 @@ import { TYPES } from '@/container/types';
 export default class ItemServiceImpl implements IFoodService {
   constructor(
     @inject(TYPES.NodemailerService)
-    private readonly nodemailerService: INodemailerService
+    private readonly nodemailerService: INodemailerService,
+    @inject(TYPES.ReviewService) 
+    private readonly reviewService: IReviewService,
+    @inject(TYPES.UserService)
+    private readonly userService: IUserService
   ) {}
 
   async getAll(
@@ -66,10 +72,10 @@ export default class ItemServiceImpl implements IFoodService {
           [
             sequelize.literal(`(
                             SELECT COUNT (*)
-                            FROM OrderItem AS orderitem 
-                            JOIN \`Order\` AS \`order\` 
-                            ON orderitem.orderId = \`order\`.id
-                            WHERE \`order\`.status = "Success" AND orderitem.itemId = item.id
+                            FROM "OrderItem" AS orderitem 
+                            JOIN "Order" AS "order" 
+                            ON orderitem."orderId" = "order".id
+                            WHERE "order".status = 'Success' AND orderitem."itemId" = Item.id
                         )`),
             'soldQuantity'
           ]
@@ -83,37 +89,15 @@ export default class ItemServiceImpl implements IFoodService {
   }
   async getById(id: number) {
     const data = await Item.findByPk(id);
-    const reviews = await Review.findAll({
-      include: [
-        {
-          model: OrderItem,
-          where: {
-            itemId: id
-          }
-        },
-        {
-          model: User,
-          as: 'user'
-        }
-      ],
-      order: [['createAt', 'DESC']]
-    });
+    const reviews = await this.reviewService.getByItemId(id);
     return { data, reviews };
   }
   async create(payload: ItemCreateDto) {
     const { isSendNotification, ...rest } = payload;
     const item = await Item.create(rest);
     if (isSendNotification) {
-      const emails = await User.findAll({
-        where: {
-          role: {
-            [Op.ne]: 'Admin'
-          }
-        },
-        attributes: ['email'],
-        raw: true
-      });
-      const emailStrings = emails.map((item) => item.email).join(', ');
+      const emails = await this.userService.getAllCustomerEmails();
+      const emailStrings = emails.join(', ');
       const content = `
         <div>
             <h1>${item.name} 🤩</h1>

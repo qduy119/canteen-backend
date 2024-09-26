@@ -1,6 +1,6 @@
 import { INodemailerService } from './nodemailer.service';
-import * as nodemailer from 'nodemailer';
-import * as htmlToText from 'html-to-text';
+import nodemailer from 'nodemailer';
+import htmlToText from 'html-to-text';
 import { injectable } from 'inversify';
 
 @injectable()

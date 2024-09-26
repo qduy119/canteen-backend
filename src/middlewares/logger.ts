@@ -1,6 +1,6 @@
 import { logger } from '@/utils/logger';
 import { Application } from 'express';
-import * as morgan from 'morgan';
+import morgan from 'morgan';
 
 export const configure = (app: Application) => {
   const morganMiddleware = morgan(

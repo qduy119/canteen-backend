@@ -1,4 +1,4 @@
-import * as multer from 'multer';
+import multer from 'multer';
 import { NextFunction, Request, Response } from 'express';
 import { upload } from './cloudinary';
 import { CustomError } from './error';

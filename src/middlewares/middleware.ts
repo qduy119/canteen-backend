@@ -6,10 +6,10 @@ import {
   Response,
   NextFunction
 } from 'express';
-import * as compression from 'compression';
-import * as cookieParser from 'cookie-parser';
-import * as cors from 'cors';
-import * as morgan from 'morgan';
+import compression from 'compression';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import morgan from 'morgan';
 import helmet from 'helmet';
 import { CustomError } from '@/utils/error';
 

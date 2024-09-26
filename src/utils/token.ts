@@ -1,4 +1,4 @@
-import * as jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { CookieOptions, Response } from 'express';
 import { Token } from '@/databases/models';
 

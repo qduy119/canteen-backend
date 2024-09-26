@@ -1,10 +1,28 @@
 import { ReviewCreateDto } from '@/dto/review/review-create.dto';
 import { IReviewService } from './review.service';
-import { Item, OrderItem, Review } from '@/databases/models';
+import { Item, OrderItem, Review, User } from '@/databases/models';
 import { injectable } from 'inversify';
 
 @injectable()
 export default class ReviewServiceImpl implements IReviewService {
+  async getByItemId(itemId: number): Promise<Review[]> {
+    const data = await Review.findAll({
+      include: [
+        {
+          model: OrderItem,
+          where: {
+            itemId
+          }
+        },
+        {
+          model: User,
+          as: 'user'
+        }
+      ]
+    });
+
+    return data;
+  }
   async create(payload: ReviewCreateDto): Promise<void> {
     const { rating: reviewRating, orderItemId } = payload;
     await Review.create(payload);

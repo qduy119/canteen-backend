@@ -1,7 +1,7 @@
 import { Application } from 'express';
-import * as fs from 'fs';
-import * as path from 'path';
-import * as swaggerUi from 'swagger-ui-express';
+import fs from 'fs';
+import path from 'path';
+import swaggerUi from 'swagger-ui-express';
 
 export const configure = (app: Application) => {
   const swaggerFilePath = path.join(__dirname, '../docs/swagger.json');
