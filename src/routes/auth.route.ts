@@ -18,7 +18,7 @@ export const configure = (app: Application) => {
     .route('/google')
     .get(passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-  router.route('/auth/google/callback').get((req, res, next) => {
+  router.route('/google/callback').get((req, res, next) => {
     passport.authenticate(
       'google',
       authController.handleThirdPartyAuthentication(req, res, next)
@@ -41,5 +41,5 @@ export const configure = (app: Application) => {
     .post(protect, restrictTo('Customer', 'Admin'), authController.logout);
   router.route('/refresh-token').get(authController.refresh);
 
-  app.use('/api/auth', router);
+  app.use('/auth', router);
 };

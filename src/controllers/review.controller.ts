@@ -22,7 +22,7 @@ export default class ReviewController {
   };
   isRated = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { id } = req.params;
+      const { orderItemId: id } = req.query;
       const data = await this.reviewService.isRated(Number(id));
       res.status(200).json(data);
     } catch (error) {
