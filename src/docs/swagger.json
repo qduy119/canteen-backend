@@ -1,0 +1,234 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "E-Commerce API",
+    "description": "Canteen API Information",
+    "contact": {
+      "name": "qduy119"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Foods",
+      "description": "Foods API"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Item": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for an item"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the item"
+          },
+          "description": {
+            "type": "string",
+            "description": "A detailed description of the item"
+          },
+          "price": {
+            "type": "number",
+            "description": "The price of the item"
+          },
+          "categoryId": {
+            "type": "string",
+            "description": "The ID of the category the item belongs to"
+          }
+        },
+        "required": ["name", "price", "categoryId"]
+      }
+    }
+  },
+  "paths": {
+    "/items": {
+      "get": {
+        "tags": ["Foods"],
+        "summary": "Retrieve a list of items",
+        "description": "Retrieve a list of items, with optional pagination and filtering by keyword or category.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "per_page",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The number of items per page for pagination"
+          },
+          {
+            "in": "query",
+            "name": "keyword",
+            "schema": {
+              "type": "string"
+            },
+            "description": "A keyword to filter the items by name or description"
+          },
+          {
+            "in": "query",
+            "name": "categoryId",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the category to filter items by"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of items",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Item"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Foods"],
+        "summary": "Create a new item",
+        "description": "Create a new item in the catalog.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The item was successfully created"
+          }
+        }
+      }
+    },
+    "/items/{id}": {
+      "get": {
+        "tags": ["Foods"],
+        "summary": "Retrieve an item by ID",
+        "description": "Retrieve detailed information about an item by its ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The ID of the item to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The details of the item",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Foods"],
+        "summary": "Update an existing item",
+        "description": "Update an item’s details by its ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The ID of the item to update"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The item was successfully updated"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Foods"],
+        "summary": "Delete an item",
+        "description": "Delete an item by its ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The ID of the item to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The item was successfully deleted"
+          }
+        }
+      }
+    },
+    "/items/top-sales": {
+      "get": {
+        "tags": ["Foods"],
+        "summary": "Retrieve a list of top-selling items",
+        "description": "Retrieve a list of items that are top-selling.",
+        "responses": {
+          "200": {
+            "description": "A list of top-selling items",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Item"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

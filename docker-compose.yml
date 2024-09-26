@@ -1,0 +1,55 @@
+version: '3.8'
+name: canteen-backend
+
+services:
+  canteen-postgres:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    container_name: canteen-postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    networks:
+      - canteen-network
+
+  canteen-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: canteen-app-container
+    ports:
+      - '3000:3000'
+    depends_on:
+      - canteen-postgres
+    volumes:
+      - ./src:/app/src
+    networks:
+      - canteen-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    container_name: canteen-pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pg4@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+      - MAX_LOGIN_ATTEMPTS=10
+    ports:
+      - '5050:80'
+    depends_on:
+      - canteen-postgres
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - canteen-network
+
+volumes:
+  pgdata:
+  pgadmin_data:
+
+networks:
+  canteen-network:
+    driver: bridge
