@@ -68,13 +68,13 @@ export default class ItemServiceImpl implements IFoodService {
   async getTopSales() {
     const query = `
       SELECT "Item".*,
-        (SELECT COUNT(*)
+        (SELECT SUM("orderitem".quantity)
           FROM "OrderItem" AS "orderitem"
           JOIN "Order" AS "order"
           ON "orderitem"."orderId" = "order".id
           WHERE "order".status = 'Success' AND "orderitem"."itemId" = "Item".id) AS "soldQuantity"
       FROM "Item"
-      WHERE (SELECT COUNT(*)
+      WHERE (SELECT SUM("orderitem".quantity)
               FROM "OrderItem" AS "orderitem"
               JOIN "Order" AS "order"
             ON "orderitem"."orderId" = "order".id
