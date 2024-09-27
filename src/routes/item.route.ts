@@ -15,12 +15,12 @@ export const configure = (app: Application) => {
     .route('/')
     .get(itemController.getAll)
     .post(protect, restrictTo('Admin'), itemController.create);
+  router.route('/top-5').get(itemController.getTopSales); 
   router
     .route('/:id')
     .get(itemController.getById)
     .put(protect, restrictTo('Admin'), itemController.update)
     .delete(protect, restrictTo('Admin'), itemController.delete);
-  router.route('/top-5').get(itemController.getTopSales);
 
   app.use('/api/item', router);
 };

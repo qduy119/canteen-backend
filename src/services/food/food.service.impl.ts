@@ -1,5 +1,5 @@
-import { Op } from 'sequelize';
-import { Item } from '@/databases/models';
+import { Op, QueryTypes } from 'sequelize';
+import { Item, } from '@/databases/models';
 import sequelize from '@/databases/connection';
 import { INodemailerService } from '../nodemailer/nodemailer.service';
 import { IFoodService } from './food.service';
@@ -66,26 +66,30 @@ export default class ItemServiceImpl implements IFoodService {
     return { data };
   }
   async getTopSales() {
-    const data = await Item.findAll({
-      attributes: {
-        include: [
-          [
-            sequelize.literal(`(
-                            SELECT COUNT (*)
-                            FROM "OrderItem" AS orderitem 
-                            JOIN "Order" AS "order" 
-                            ON orderitem."orderId" = "order".id
-                            WHERE "order".status = 'Success' AND orderitem."itemId" = Item.id
-                        )`),
-            'soldQuantity'
-          ]
-        ]
-      },
-      having: sequelize.literal('soldQuantity > 0'),
-      order: [[sequelize.literal('soldQuantity'), 'DESC']],
-      limit: 5
-    });
-    return data;
+    const query = `
+      SELECT "Item".*,
+        (SELECT COUNT(*)
+          FROM "OrderItem" AS "orderitem"
+          JOIN "Order" AS "order"
+          ON "orderitem"."orderId" = "order".id
+          WHERE "order".status = 'Success' AND "orderitem"."itemId" = "Item".id) AS "soldQuantity"
+      FROM "Item"
+      WHERE (SELECT COUNT(*)
+              FROM "OrderItem" AS "orderitem"
+              JOIN "Order" AS "order"
+            ON "orderitem"."orderId" = "order".id
+            WHERE "order".status = 'Success' AND "orderitem"."itemId" = "Item".id) > 0
+            ORDER BY "soldQuantity" DESC
+            LIMIT 5;
+  `;
+
+  const data = await sequelize.query(query, {
+    type: QueryTypes.SELECT,
+    model: Item,
+    mapToModel: true
+  });
+
+  return data;
   }
   async getById(id: number) {
     const data = await Item.findByPk(id);
