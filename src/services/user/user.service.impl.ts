@@ -28,10 +28,10 @@ export default class UserServiceImpl implements IUserService {
     delete data.get().password;
     return data;
   }
-  async update(id: number, payload: UserUpdateDto): Promise<void> {
+  async update(id: string, payload: UserUpdateDto): Promise<void> {
     await User.update(payload, { where: { id } });
   }
-  async delete(id: number): Promise<void> {
+  async delete(id: string): Promise<void> {
     await User.destroy({ where: { id } });
   }
 }

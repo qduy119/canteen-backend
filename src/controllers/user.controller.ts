@@ -46,8 +46,9 @@ export default class UserController {
   update = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
-      const payload = req.body;
-      await this.userService.update(Number(id), payload);
+      const avatar = req.file ? req.file.path : req.body.avatar;
+      const payload = { ...req.body, avatar };
+      await this.userService.update(id.toString(), payload);
       res.status(200).json({});
     } catch (error) {
       next(error);
@@ -56,7 +57,7 @@ export default class UserController {
   delete = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
-      await this.userService.delete(Number(id));
+      await this.userService.delete(id.toString());
       res.status(200).json({});
     } catch (error) {
       next(error);

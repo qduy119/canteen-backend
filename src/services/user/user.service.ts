@@ -5,6 +5,6 @@ export interface IUserService {
   getAll(): Promise<User[]>;
   getAllCustomerEmails(): Promise<string[]>
   getById(id: string): Promise<User>;
-  update(id: number, payload: UserUpdateDto): Promise<void>;
-  delete(id: number): Promise<void>;
+  update(id: string, payload: UserUpdateDto): Promise<void>;
+  delete(id: string): Promise<void>;
 }

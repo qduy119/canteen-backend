@@ -4,6 +4,7 @@ import { UserController } from '@/controllers';
 import { myContainer } from '@/container/inversify.config';
 import { IUserService } from '@/services/user/user.service';
 import { TYPES } from '@/container/types';
+import { imageUpload } from '@/utils/upload';
 
 export const configure = (app: Application) => {
   const router = Router({ mergeParams: true });
@@ -19,8 +20,12 @@ export const configure = (app: Application) => {
   router.route('/user').get(restrictTo('Admin'), userController.getAll);
   router
     .route('/user/:id')
-    .put(restrictTo('Customer', 'Admin'), userController.update)
-    .delete(restrictTo('Customer', 'Admin'), userController.delete)
+    .put(
+      restrictTo('Customer', 'Admin'),
+      imageUpload('avatar'),
+      userController.update
+    )
+    .delete(restrictTo('Admin'), userController.delete)
     .get(restrictTo('Customer', 'Admin'), userController.getById);
 
   app.use('/api', router);

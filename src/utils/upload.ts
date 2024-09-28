@@ -16,17 +16,14 @@ export const imagesUploadHandler =
     });
   };
 
-export const imageUpload = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  upload.single('image')(req, res, (error: any) => {
-    if (error instanceof multer.MulterError) {
-      next(new CustomError(Number(error.code), error.message));
-    } else if (error) {
-      next(error);
-    }
-    next();
-  });
-};
+export const imageUpload =
+  (field: string) => (req: Request, res: Response, next: NextFunction) => {
+    upload.single(field)(req, res, (error: any) => {
+      if (error instanceof multer.MulterError) {
+        next(new CustomError(Number(error.code), error.message));
+      } else if (error) {
+        next(error);
+      }
+      next();
+    });
+  };
