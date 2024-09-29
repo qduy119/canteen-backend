@@ -19,6 +19,12 @@ export const configure = (app: Application) => {
     .get(restrictTo('Customer', 'Admin'), userController.getMe);
   router.route('/user').get(restrictTo('Admin'), userController.getAll);
   router
+    .route('/user/change-password')
+    .put(restrictTo('Customer'), userController.changePassword);
+  router
+    .route('/user/forgot-password')
+    .put(restrictTo('Customer'), userController.forgotPassword);
+  router
     .route('/user/:id')
     .put(
       restrictTo('Customer', 'Admin'),

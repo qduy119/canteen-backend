@@ -6,6 +6,6 @@ export interface INodemailerService {
   }: {
     subject: string;
     content: string;
-    to: string;
+    to: string[] | string;
   }): Promise<void>;
 }

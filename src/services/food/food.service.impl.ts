@@ -101,7 +101,6 @@ export default class ItemServiceImpl implements IFoodService {
     const item = await Item.create(rest);
     if (isSendNotification) {
       const emails = await this.userService.getAllCustomerEmails();
-      const emailStrings = emails.join(', ');
       const content = `
         <div>
             <h1>${item.name} 🤩</h1>
@@ -114,7 +113,7 @@ export default class ItemServiceImpl implements IFoodService {
       await this.nodemailerService.send({
         subject: '💥 MYCANTEEN: NEW FOOD 🥪',
         content,
-        to: emailStrings
+        to: emails
       });
     }
   }

@@ -63,4 +63,23 @@ export default class UserController {
       next(error);
     }
   };
+  changePassword = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const payload = req.body;
+      const id = req.user.id;
+      await this.userService.changePassword(id, payload);
+      res.status(200).json({});
+    } catch (error) {
+      next(error);
+    }
+  };
+  forgotPassword = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const id = req.user.id;
+      await this.userService.forgotPassword(id);
+      res.status(200).json({});
+    } catch (error) {
+      next(error);
+    }
+  };
 }
