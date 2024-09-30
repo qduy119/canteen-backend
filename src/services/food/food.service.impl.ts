@@ -1,5 +1,5 @@
 import { Op, QueryTypes } from 'sequelize';
-import { Item, } from '@/databases/models';
+import { Item } from '@/databases/models';
 import sequelize from '@/databases/connection';
 import { INodemailerService } from '../nodemailer/nodemailer.service';
 import { IFoodService } from './food.service';
@@ -7,7 +7,7 @@ import { IReviewService } from '../review/review.service';
 import { IUserService } from '../user/user.service';
 import { ItemCreateDto } from '@/dto/item/item-create.dto';
 import { ItemUpdateDto } from '@/dto/item/item-update.dto';
-import { inject, injectable } from 'inversify';
+import { inject, injectable, LazyServiceIdentifer } from 'inversify';
 import { TYPES } from '@/container/types';
 
 @injectable()
@@ -15,7 +15,7 @@ export default class ItemServiceImpl implements IFoodService {
   constructor(
     @inject(TYPES.NodemailerService)
     private readonly nodemailerService: INodemailerService,
-    @inject(TYPES.ReviewService) 
+    @inject(new LazyServiceIdentifer(() => TYPES.ReviewService))
     private readonly reviewService: IReviewService,
     @inject(TYPES.UserService)
     private readonly userService: IUserService
@@ -83,13 +83,13 @@ export default class ItemServiceImpl implements IFoodService {
             LIMIT 5;
   `;
 
-  const data = await sequelize.query(query, {
-    type: QueryTypes.SELECT,
-    model: Item,
-    mapToModel: true
-  });
+    const data = await sequelize.query(query, {
+      type: QueryTypes.SELECT,
+      model: Item,
+      mapToModel: true
+    });
 
-  return data;
+    return data;
   }
   async getById(id: number) {
     const data = await Item.findByPk(id);
