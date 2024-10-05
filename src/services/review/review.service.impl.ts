@@ -1,16 +1,16 @@
 import { ReviewCreateDto } from '@/dto/review/review-create.dto';
 import { IReviewService } from './review.service';
 import { OrderItem, Review, User } from '@/databases/models';
-import { inject, injectable, LazyServiceIdentifer } from 'inversify';
+import { injectable } from 'inversify';
 import { IFoodService } from '../food/food.service';
-import { TYPES } from '@/container/types';
 
 @injectable()
 export default class ReviewServiceImpl implements IReviewService {
-  constructor(
-    @inject(new LazyServiceIdentifer(() => TYPES.FoodService))
-    private readonly foodService: IFoodService
-  ) {}
+  private foodService: IFoodService;
+
+  setFoodDependencyInstance(service: IFoodService) {
+    this.foodService = service;
+  }
 
   async getByItemId(itemId: number): Promise<Review[]> {
     const data = await Review.findAll({

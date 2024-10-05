@@ -1,17 +1,9 @@
-import {
-  Application,
-  urlencoded,
-  json,
-  Request,
-  Response,
-  NextFunction
-} from 'express';
+import { Application, urlencoded, json } from 'express';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import morgan from 'morgan';
 import helmet from 'helmet';
-import { CustomError } from '@/utils/error';
 
 export const configure = (app: Application) => {
   if (process.env.NODE_ENV === 'development') {
@@ -44,18 +36,4 @@ export const configure = (app: Application) => {
 
   // helps you secure your Express apps by setting various HTTP headers
   app.use(helmet());
-
-  // handler error
-  /* eslint-disable @typescript-eslint/no-unused-vars */
-  app.use(
-    (error: CustomError, req: Request, res: Response, next: NextFunction) => {
-      error.statusCode = error.statusCode || 500;
-      error.message = error.message || 'Something went wrong';
-
-      return res.status(error.statusCode).json({
-        statusCode: error.statusCode,
-        message: error.message
-      });
-    }
-  );
 };

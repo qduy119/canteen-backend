@@ -3,23 +3,30 @@ import { Item } from '@/databases/models';
 import sequelize from '@/databases/connection';
 import { INodemailerService } from '../nodemailer/nodemailer.service';
 import { IFoodService } from './food.service';
-import { IReviewService } from '../review/review.service';
+import {
+  FactoryOfReviewService,
+  IReviewService
+} from '../review/review.service';
 import { IUserService } from '../user/user.service';
 import { ItemCreateDto } from '@/dto/item/item-create.dto';
 import { ItemUpdateDto } from '@/dto/item/item-update.dto';
-import { inject, injectable, LazyServiceIdentifer } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { TYPES } from '@/container/types';
 
 @injectable()
 export default class ItemServiceImpl implements IFoodService {
+  private readonly reviewService: IReviewService;
+
   constructor(
     @inject(TYPES.NodemailerService)
     private readonly nodemailerService: INodemailerService,
-    @inject(new LazyServiceIdentifer(() => TYPES.ReviewService))
-    private readonly reviewService: IReviewService,
     @inject(TYPES.UserService)
-    private readonly userService: IUserService
-  ) {}
+    private readonly userService: IUserService,
+    @inject(TYPES.FatoryOfReviewService)
+    factoryOfReviewService: FactoryOfReviewService
+  ) {
+    this.reviewService = factoryOfReviewService(this);
+  }
 
   async getAll(
     page: number | undefined,

@@ -4,6 +4,7 @@ import * as Logger from '@/middlewares/logger';
 import * as Swagger from '@/middlewares/swagger';
 import * as OAuthPassport from '@/middlewares/passport';
 import * as Routes from '@/routes';
+import * as GlobalError from '@/middlewares/error';
 
 export interface IExpressApp {
   port: number | string;
@@ -18,6 +19,8 @@ export function expressApp(opt: IExpressApp): express.Application {
   OAuthPassport.configure(app);
 
   Routes.init(app);
+
+  GlobalError.configure(app);
 
   app.set('port', opt.port);
 

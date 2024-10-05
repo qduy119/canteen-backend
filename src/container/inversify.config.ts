@@ -1,4 +1,4 @@
-import { Container } from 'inversify';
+import { Container, interfaces } from 'inversify';
 import { TYPES } from './types';
 import { IAuthService } from '@/services/auth/auth.service';
 import {
@@ -24,12 +24,15 @@ import { INodemailerService } from '@/services/nodemailer/nodemailer.service';
 import { IOrderService } from '@/services/order/order.service';
 import { IOrderItemService } from '@/services/order-item/order-item.service';
 import { IPaymentService } from '@/services/payment/payment.service';
-import { IReviewService } from '@/services/review/review.service';
+import {
+  FactoryOfReviewService,
+  IReviewService
+} from '@/services/review/review.service';
 import { ISeatReservationService } from '@/services/seat-reservation/seat-reservation.service';
 import { ITokenService } from '@/services/token/token.service';
 import { IUserService } from '@/services/user/user.service';
 
-const myContainer = new Container();
+const myContainer = new Container({ defaultScope: 'Singleton' });
 
 myContainer.bind<IAuthService>(TYPES.AuthService).to(AuthServiceImpl);
 myContainer
@@ -49,6 +52,17 @@ myContainer
   .to(OrderItemServiceImpl);
 myContainer.bind<IPaymentService>(TYPES.PaymentService).to(PaymentServiceImpl);
 myContainer.bind<IReviewService>(TYPES.ReviewService).to(ReviewServiceImpl);
+myContainer
+  .bind<FactoryOfReviewService>(TYPES.FatoryOfReviewService)
+  .toFactory<IReviewService>((ctx: interfaces.Context) => {
+    return (parent: IFoodService) => {
+      const reviewService = ctx.container.get<IReviewService>(
+        TYPES.ReviewService
+      );
+      reviewService.setFoodDependencyInstance(parent);
+      return reviewService;
+    };
+  });
 myContainer
   .bind<ISeatReservationService>(TYPES.SeatReservationService)
   .to(SeatReservationServiceImpl);
