@@ -7,6 +7,7 @@ import { IPaymentService } from './payment.service';
 import { PaymentCreateDto } from '@/dto/payment/payment-create.dto';
 import { PaymentUpdateDto } from '@/dto/payment/payment-update.dto';
 import { injectable } from 'inversify';
+import envConfig from '@/config';
 
 @injectable()
 export default class PaymentServiceImpl implements IPaymentService {
@@ -32,17 +33,16 @@ export default class PaymentServiceImpl implements IPaymentService {
   }
   createPaymentUrl(req: Request): string {
     const { orderId, amount, bankCode } = req.body;
-    process.env.TZ = 'Asia/Ho_Chi_Minh';
 
     const date = new Date();
     const createDate = moment(date).format('YYYYMMDDHHmmss');
 
     const ipAddr = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
 
-    const tmnCode = process.env.VNP_TMNCODE;
-    const secretKey = process.env.VNP_HASHSECRET;
-    let vnpUrl = process.env.VNP_URL;
-    const returnUrl = process.env.CLIENT_URL + process.env.VNP_RETURN_URL;
+    const tmnCode = envConfig.VNP_TMNCODE;
+    const secretKey = envConfig.VNP_HASHSECRET;
+    let vnpUrl = envConfig.VNP_URL;
+    const returnUrl = envConfig.CLIENT_URL + envConfig.VNP_RETURN_URL;
 
     let locale = req.body.language;
     if (!locale) {

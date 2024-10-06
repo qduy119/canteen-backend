@@ -4,9 +4,10 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import morgan from 'morgan';
 import helmet from 'helmet';
+import envConfig from '@/config';
 
 export const configure = (app: Application) => {
-  if (process.env.NODE_ENV === 'development') {
+  if (envConfig.NODE_ENV === 'development') {
     app.use(morgan('dev'));
   }
 

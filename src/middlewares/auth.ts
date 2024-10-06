@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { CustomError } from '@/utils/error';
 import { User } from '@/databases/models';
 import { JwtPayload } from '@/utils/token';
+import envConfig from '@/config';
 
 export const protect = async (
   req: Request,
@@ -26,7 +27,7 @@ export const protect = async (
 
   jwt.verify(
     token,
-    process.env.ACCESS_TOKEN_SECRET,
+    envConfig.ACCESS_TOKEN_SECRET,
     async (error, data: JwtPayload) => {
       if (!data) {
         return next(new CustomError(401));

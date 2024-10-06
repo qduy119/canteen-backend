@@ -23,12 +23,12 @@ module.exports = {
       },
       gender: {
         type: Sequelize.ENUM('Male', 'Female', 'Other'),
-        defaultValue: 'Male',
+        defaultValue: 'Male'
       },
       dateOfBirth: Sequelize.DATE,
       role: {
         type: Sequelize.ENUM('Customer', 'Admin', 'Employee'),
-        defaultValue: 'Customer',
+        defaultValue: 'Customer'
       }
     });
   },

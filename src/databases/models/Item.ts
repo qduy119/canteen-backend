@@ -52,8 +52,7 @@ Item.init(
       type: DataTypes.FLOAT,
       defaultValue: 0,
       validate: {
-        max: 5,
-        
+        max: 5
       }
     }
   },

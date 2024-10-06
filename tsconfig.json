@@ -26,13 +26,7 @@
       "@/*": ["src/*"]
     }
   },
-  "include": [
-    "src/**/*.ts",
-    "src/common/types",
-    "src/docs",
-    "index.ts",
-    "application.ts"
-  ],
+  "include": ["src/**/*.ts", "src/common/types", "application.ts", "index.ts"],
   "exclude": ["node_modules", "build", "dist"],
   "ts-node": {
     "require": ["tsconfig-paths/register"]

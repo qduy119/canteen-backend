@@ -12,7 +12,7 @@ export interface IExpressApp {
 
 export function expressApp(opt: IExpressApp): express.Application {
   const app = express();
-  
+
   Middleware.configure(app);
   Logger.configure(app);
   Swagger.configure(app);

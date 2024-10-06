@@ -1,9 +1,10 @@
+import envConfig from '@/config';
 import winston from 'winston';
 
 const { combine, timestamp, json } = winston.format;
 
 export const logger = winston.createLogger({
-  level: process.env.LOG_LEVEL,
+  level: envConfig.LOG_LEVEL,
   format: combine(
     timestamp({
       format: 'YYYY-MM-DD hh:mm:ss.SSS A'

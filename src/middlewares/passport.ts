@@ -4,6 +4,7 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as GithubStrategy } from 'passport-github2';
 import { User } from '@/databases/models';
 import { logger } from '@/utils/logger';
+import envConfig from '@/config';
 
 export const configure = (app: Application) => {
   app.use(passport.initialize());
@@ -11,9 +12,9 @@ export const configure = (app: Application) => {
   passport.use(
     new GoogleStrategy(
       {
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: process.env.GOOGLE_CALLBACK_URL
+        clientID: envConfig.GOOGLE_CLIENT_ID,
+        clientSecret: envConfig.GOOGLE_CLIENT_SECRET,
+        callbackURL: envConfig.GOOGLE_CALLBACK_URL
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
@@ -49,9 +50,9 @@ export const configure = (app: Application) => {
   passport.use(
     new GithubStrategy(
       {
-        clientID: process.env.GITHUB_CLIENT_ID,
-        clientSecret: process.env.GITHUB_CLIENT_SECRET,
-        callbackURL: process.env.GITHUB_CALLBACK_URL
+        clientID: envConfig.GITHUB_CLIENT_ID,
+        clientSecret: envConfig.GITHUB_CLIENT_SECRET,
+        callbackURL: envConfig.GITHUB_CALLBACK_URL
       },
       async (accessToken, refreshToken, profile, done) => {
         try {

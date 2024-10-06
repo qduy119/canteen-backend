@@ -42,7 +42,7 @@ Coupon.init(
       type: DataTypes.DATE,
       validate: {
         isValid: (val: Date) => {
-          if(val <= new Date()) {
+          if (val <= new Date()) {
             throw new Error('Expiration date is not valid');
           }
         }

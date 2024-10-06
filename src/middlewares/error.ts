@@ -1,9 +1,4 @@
-import {
-  Application,
-  Request,
-  Response,
-  NextFunction
-} from 'express';
+import { Application, Request, Response, NextFunction } from 'express';
 import { CustomError } from '@/utils/error';
 
 export const configure = (app: Application) => {

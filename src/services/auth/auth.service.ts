@@ -9,5 +9,10 @@ export interface IAuthService {
   register(payload: RegisterDto): Promise<void>;
   logout(refreshToken: string): Promise<void>;
   refresh(refreshToken: string): Promise<RefreshTokenResDto>;
-  handleThirdPartyAuthentication(error: any, user: any, info: any, res: Response): Promise<void>;
+  handleThirdPartyAuthentication(
+    error: any,
+    user: any,
+    info: any,
+    res: Response
+  ): Promise<void>;
 }

@@ -2,6 +2,7 @@ import { INodemailerService } from './nodemailer.service';
 import nodemailer from 'nodemailer';
 import * as htmlToText from 'html-to-text';
 import { injectable } from 'inversify';
+import envConfig from '@/config';
 
 @injectable()
 export default class NodemailerServiceImpl implements INodemailerService {
@@ -11,8 +12,8 @@ export default class NodemailerServiceImpl implements INodemailerService {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: process.env.GMAIL_USERNAME,
-        pass: process.env.GMAIL_PASSWORD
+        user: envConfig.GMAIL_USERNAME,
+        pass: envConfig.GMAIL_PASSWORD
       }
     });
     this._transporter = transporter;
@@ -20,7 +21,7 @@ export default class NodemailerServiceImpl implements INodemailerService {
 
   async send({ subject, content, to }): Promise<void> {
     const mailOptions = {
-      from: process.env.GMAIL_FROM,
+      from: envConfig.GMAIL_FROM,
       to,
       subject,
       html: content,

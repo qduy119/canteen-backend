@@ -1,13 +1,14 @@
+import envConfig from '@/config';
 import { Sequelize } from 'sequelize';
 
 const sequelize = new Sequelize(
-  process.env.DB_DATABASE,
-  process.env.DB_USERNAME,
-  process.env.DB_PASSWORD,
+  envConfig.DB_DATABASE,
+  envConfig.DB_USERNAME,
+  envConfig.DB_PASSWORD,
   {
-    host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT),
-    dialect: 'postgres',
+    host: envConfig.DB_HOST,
+    port: Number(envConfig.DB_PORT),
+    dialect: envConfig.DB_DIALECT,
     logging: false
   }
 );

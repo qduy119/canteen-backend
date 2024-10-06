@@ -6,10 +6,11 @@ import { Application } from './application';
 import { server } from '@/server';
 import { logger } from '@/utils/logger';
 import { connectToDatabase } from '@/utils/connect';
+import envConfig from '@/config';
 
 (async () => {
   try {
-    const PORT = process.env.PORT || 3000;
+    const PORT = envConfig.PORT || 3000;
     // Init express server
     server({
       port: PORT

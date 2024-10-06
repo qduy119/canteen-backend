@@ -15,7 +15,7 @@ export const configure = (app: Application) => {
     .route('/')
     .get(itemController.getAll)
     .post(protect, restrictTo('Admin'), itemController.create);
-  router.route('/top-5').get(itemController.getTopSales); 
+  router.route('/top-5').get(itemController.getTopSales);
   router
     .route('/:id')
     .get(itemController.getById)

@@ -20,6 +20,7 @@ import {
 import { RefreshTokenResDto } from '@/dto/user/refresh-token-res.dto';
 import { ITokenService } from '../token/token.service';
 import { TYPES } from '@/container/types';
+import envConfig from '@/config';
 
 const verifyAsync = promisify(jwt.verify.bind(jwt));
 
@@ -67,7 +68,7 @@ export default class AuthServiceImpl implements IAuthService {
   async logout(refreshToken: string): Promise<void> {
     const payload: JwtPayload = await verifyAsync(
       refreshToken,
-      process.env.REFRESH_TOKEN_SECRET
+      envConfig.REFRESH_TOKEN_SECRET
     );
     await this.tokenService.destroy({
       userId: payload.id,
@@ -77,7 +78,7 @@ export default class AuthServiceImpl implements IAuthService {
   async refresh(refreshToken: string): Promise<RefreshTokenResDto> {
     const payload: JwtPayload = await verifyAsync(
       refreshToken,
-      process.env.REFRESH_TOKEN_SECRET
+      envConfig.REFRESH_TOKEN_SECRET
     );
     const found = await Token.findOne({
       where: {
@@ -108,6 +109,6 @@ export default class AuthServiceImpl implements IAuthService {
     sendAccessToken(user, res);
     await sendRefreshToken(user, res);
 
-    res.redirect(`${process.env.CLIENT_URL}`);
+    res.redirect(`${envConfig.CLIENT_URL}`);
   }
 }
