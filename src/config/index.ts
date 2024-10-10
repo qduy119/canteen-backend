@@ -11,10 +11,10 @@ if (!fs.existsSync(path.resolve('.env'))) {
 }
 
 export const configSchema = z.object({
-  NODE_ENV: z.string(),
+  NODE_ENV: z.string().default('development'),
   TZ: z.string().default('Asia/Ho_Chi_Minh'),
 
-  LOG_LEVEL: z.string(),
+  LOG_LEVEL: z.string().default('debug'),
 
   PORT: z.coerce.number().default(3000),
   CLIENT_URL: z.string(),

@@ -1,5 +1,4 @@
 import('dotenv/config');
-import envConfig from '@/config';
 import swaggerGen from 'swagger-autogen';
 
 const swaggerAutogen = swaggerGen();
@@ -13,7 +12,7 @@ const doc = {
     },
     version: '1.0.0'
   },
-  host: envConfig.SERVER_URL
+  host: process.env.SERVER_URL
 };
 
 const outputFile = './swagger.json';

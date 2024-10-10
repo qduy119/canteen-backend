@@ -29,7 +29,7 @@ export const genRefreshToken = (payload: JwtPayload) =>
 export async function sendRefreshToken(payload: JwtPayload, res: Response) {
   const refreshToken = genRefreshToken(payload);
   const expirationDate = new Date(
-    Date.now() + Number(envConfig.TOKEN_COOKIE_EXPIRATION) * 24 * 60 * 60 * 1000
+    Date.now() + envConfig.TOKEN_COOKIE_EXPIRATION * 24 * 60 * 60 * 1000
   );
   await Token.create({
     userId: payload.id,
@@ -48,7 +48,7 @@ export async function sendRefreshToken(payload: JwtPayload, res: Response) {
 export function sendAccessToken(payload: JwtPayload, res: Response) {
   const accessToken = genAccessToken(payload);
   const expirationDate = new Date(
-    Date.now() + Number(envConfig.TOKEN_COOKIE_EXPIRATION) * 24 * 60 * 60 * 1000
+    Date.now() + envConfig.TOKEN_COOKIE_EXPIRATION * 24 * 60 * 60 * 1000
   );
   const options = {
     sameSite: envConfig.NODE_ENV === 'development' ? 'lax' : 'none',
