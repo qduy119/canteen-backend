@@ -1,21 +1,11 @@
 import('dotenv/config');
-import swaggerGen from 'swagger-autogen';
+import path from 'path';
+import fs from 'fs';
+import { Application } from 'express';
+import * as swaggerUi from 'swagger-ui-express';
 
-const swaggerAutogen = swaggerGen();
-
-const doc = {
-  info: {
-    title: 'E-Commerce API',
-    description: 'Canteen API Information',
-    contact: {
-      name: 'qduy119'
-    },
-    version: '1.0.0'
-  },
-  host: process.env.SERVER_URL
+export const configure = (app: Application) => {
+  const swaggerFilePath = path.join(__dirname, 'swagger.json');
+  const swaggerDocs = JSON.parse(fs.readFileSync(swaggerFilePath, 'utf8'));
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 };
-
-const outputFile = './swagger.json';
-const routes = ['../routes/index.js'];
-
-swaggerAutogen(outputFile, routes, doc);

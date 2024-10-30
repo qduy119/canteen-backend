@@ -1,7 +1,7 @@
 import express from 'express';
 import * as Middleware from '@/middlewares/middleware';
 import * as Logger from '@/middlewares/logger';
-import * as Swagger from '@/middlewares/swagger';
+import * as Swagger from '@/docs/swagger';
 import * as OAuthPassport from '@/middlewares/passport';
 import * as Routes from '@/routes';
 import * as GlobalError from '@/middlewares/error';

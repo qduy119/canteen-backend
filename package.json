@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf -rf dist",
-    "build": "npx tsc",
+    "copy-swagger": "copyfiles src/docs/swagger.json dist",
+    "copy-common": "copyfiles src/common/types/index.d.ts dist",
+    "build": "npx tsc && pnpm run copy-swagger && pnpm run copy-common",
     "prestart": "npm run build",
     "start": "nodemon dist/index.js",
     "preserve": "npm run build",
@@ -18,7 +20,6 @@
     "migrate:undo:all": "npx sequelize-cli db:migrate:undo:all",
     "seed:all": "npx sequelize-cli db:seed:all",
     "seed:undo:all": "npx sequelize-cli db:seed:undo:all",
-    "swagger:gen": "node dist/src/docs/swagger.js",
     "test": "jest"
   },
   "author": "",
@@ -50,7 +51,6 @@
     "reflect-metadata": "^0.2.2",
     "sequelize": "^6.37.3",
     "supertest": "^7.0.0",
-    "swagger-autogen": "^2.23.7",
     "swagger-ui-express": "^5.0.1",
     "uuid": "^10.0.0",
     "winston": "^3.14.2",

@@ -11,6 +11,7 @@ const config: Config = {
   },
   preset: 'ts-jest',
   testEnvironment: 'node',
+  verbose: true,
   testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[tj]s?(x)']
 };
 
