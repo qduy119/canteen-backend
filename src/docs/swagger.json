@@ -22,37 +22,83 @@
     {
       "name": "Food",
       "description": "Canteen food"
+    },
+    {
+      "name": "Category",
+      "description": "Food category"
+    },
+    {
+      "name": "Coupon",
+      "description": "Food coupon"
+    },
+    {
+      "name": "Review",
+      "description": "Food review"
+    },
+    {
+      "name": "SeatReservation",
+      "description": "Seat reservation"
+    },
+    {
+      "name": "CartItem",
+      "description": "Item in cart"
+    },
+    {
+      "name": "Order",
+      "description": "User order"
+    },
+    {
+      "name": "Payment",
+      "description": "User payment"
+    },
+    {
+      "name": "User",
+      "description": "User system"
+    },
+    {
+      "name": "Auth",
+      "description": "Authentication"
     }
   ],
   "paths": {
-    "/item": {
+    "/api/item": {
       "get": {
-        "tags": ["Food"],
+        "tags": [
+          "Food"
+        ],
         "summary": "Get all items",
         "description": "Retrieves a list of items with optional filtering by page, per_page, keyword, and categoryId.",
         "parameters": [
           {
             "name": "page",
             "in": "query",
-            "schema": { "type": "integer" },
+            "schema": {
+              "type": "integer"
+            },
             "description": "Page number for pagination"
           },
           {
             "name": "per_page",
             "in": "query",
-            "schema": { "type": "integer" },
+            "schema": {
+              "type": "integer"
+            },
             "description": "Items per page for pagination"
           },
           {
             "name": "keyword",
             "in": "query",
-            "schema": { "type": "string" },
+            "schema": {
+              "type": "string"
+            },
             "description": "Keyword to filter items by name"
           },
           {
             "name": "categoryId",
             "in": "query",
-            "schema": { "type": "integer" },
+            "schema": {
+              "type": "integer"
+            },
             "description": "Category ID to filter items"
           }
         ],
@@ -63,7 +109,9 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": { "$ref": "#/components/schemas/Item" }
+                  "items": {
+                    "$ref": "#/components/schemas/Item"
+                  }
                 }
               }
             }
@@ -71,26 +119,40 @@
         }
       },
       "post": {
-        "tags": ["Food"],
+        "tags": [
+          "Food"
+        ],
         "summary": "Create a new item",
-        "security": [{ "bearerAuth": [] }],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "description": "Creates a new item. Only accessible by Admins.",
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/CreateUpdateItem" }
+              "schema": {
+                "$ref": "#/components/schemas/CreateUpdateItem"
+              }
             }
           }
         },
         "responses": {
-          "200": { "description": "Item created successfully" },
-          "403": { "description": "Unauthorized or insufficient permissions" }
+          "200": {
+            "description": "Item created successfully"
+          },
+          "403": {
+            "description": "Unauthorized or insufficient permissions"
+          }
         }
       }
     },
-    "/item/top-5": {
+    "/api/item/top-5": {
       "get": {
-        "tags": ["Food"],
+        "tags": [
+          "Food"
+        ],
         "summary": "Get top 5 sales items",
         "description": "Retrieve the top 5 items by sales.",
         "responses": {
@@ -100,7 +162,9 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": { "$ref": "#/components/schemas/Item" }
+                  "items": {
+                    "$ref": "#/components/schemas/Item"
+                  }
                 }
               }
             }
@@ -108,16 +172,20 @@
         }
       }
     },
-    "/item/{id}": {
+    "/api/item/{id}": {
       "get": {
-        "tags": ["Food"],
+        "tags": [
+          "Food"
+        ],
         "summary": "Get an item by ID",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer" },
+            "schema": {
+              "type": "integer"
+            },
             "description": "ID of the item"
           }
         ],
@@ -126,66 +194,1785 @@
             "description": "Item data",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Item" }
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
               }
             }
           },
-          "404": { "description": "Item not found" }
+          "404": {
+            "description": "Item not found"
+          }
         }
       },
       "put": {
-        "tags": ["Food"],
+        "tags": [
+          "Food"
+        ],
         "summary": "Update an item",
-        "security": [{ "bearerAuth": [] }],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "description": "Updates an item by ID. Only accessible by Admins.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer" },
+            "schema": {
+              "type": "integer"
+            },
             "description": "ID of the item"
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/CreateUpdateItem" }
+              "schema": {
+                "$ref": "#/components/schemas/CreateUpdateItem"
+              }
             }
           }
         },
         "responses": {
-          "200": { "description": "Item updated successfully" },
-          "403": { "description": "Unauthorized or insufficient permissions" }
+          "200": {
+            "description": "Item updated successfully"
+          },
+          "403": {
+            "description": "Unauthorized or insufficient permissions"
+          }
         }
       },
       "delete": {
-        "tags": ["Food"],
+        "tags": [
+          "Food"
+        ],
         "summary": "Delete an item",
-        "security": [{ "bearerAuth": [] }],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "description": "Deletes an item by ID. Only accessible by Admins.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer" },
+            "schema": {
+              "type": "integer"
+            },
             "description": "ID of the item"
           }
         ],
         "responses": {
-          "200": { "description": "Item deleted successfully" },
-          "403": { "description": "Unauthorized or insufficient permissions" }
+          "200": {
+            "description": "Item deleted successfully"
+          },
+          "403": {
+            "description": "Unauthorized or insufficient permissions"
+          }
+        }
+      }
+    },
+    "/api/category": {
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Get all categories",
+        "description": "Retrieve a list of all categories.",
+        "responses": {
+          "200": {
+            "description": "List of categories",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Category"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Create category",
+        "description": "Create a new category. Only accessible to Admins.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Category"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Category created successfully"
+          },
+          "403": {
+            "description": "Forbidden: Requires Admin role"
+          }
+        }
+      }
+    },
+    "/api/category/{id}": {
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Get category by ID",
+        "description": "Retrieve a specific category by its ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the category to retrieve",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Category details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Category not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Update category",
+        "description": "Update a specific category by its ID. Only accessible to Admins.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the category to update",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Category"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Category updated successfully"
+          },
+          "403": {
+            "description": "Forbidden: Requires Admin role"
+          },
+          "404": {
+            "description": "Category not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Delete category",
+        "description": "Delete a specific category by its ID. Only accessible to Admins.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the category to delete",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Category deleted successfully"
+          },
+          "403": {
+            "description": "Forbidden: Requires Admin role"
+          },
+          "404": {
+            "description": "Category not found"
+          }
+        }
+      }
+    },
+    "/api/review": {
+      "post": {
+        "tags": [
+          "Review"
+        ],
+        "summary": "Create a review",
+        "description": "Allow customers to create a review with images. Requires authentication.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "rating": {
+                    "type": "integer",
+                    "description": "Rating given by the customer."
+                  },
+                  "comment": {
+                    "type": "string",
+                    "description": "Comment provided by the customer."
+                  },
+                  "images_feedback": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    },
+                    "description": "Images associated with the review (up to 3 images)."
+                  }
+                },
+                "required": [
+                  "rating",
+                  "comment"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Review created successfully"
+          },
+          "403": {
+            "description": "Forbidden: Requires Customer role"
+          }
+        }
+      }
+    },
+    "/api/review/check-rating/{orderItemId}": {
+      "get": {
+        "tags": [
+          "Review"
+        ],
+        "summary": "Check if an item has been rated",
+        "description": "Check if the customer has rated a specific order item.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "orderItemId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the order item to check",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Rating status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "rated": {
+                      "type": "boolean",
+                      "description": "Indicates if the item has been rated"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden: Requires Customer role"
+          }
+        }
+      }
+    },
+    "/api/seat-reservation": {
+      "get": {
+        "tags": [
+          "SeatReservation"
+        ],
+        "summary": "Get all seat reservations",
+        "description": "Retrieve a list of all seat reservations.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of seat reservations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SeatReservation"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden: Requires authentication"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "SeatReservation"
+        ],
+        "summary": "Create a seat reservation",
+        "description": "Allow customers or admins to create a seat reservation.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "seatNumber": {
+                    "type": "integer",
+                    "description": "The number of the seat to reserve."
+                  },
+                  "orderId": {
+                    "type": "integer",
+                    "description": "The ID of the order associated with the reservation."
+                  },
+                  "customerId": {
+                    "type": "integer",
+                    "description": "The ID of the customer making the reservation."
+                  }
+                },
+                "required": [
+                  "seatNumber",
+                  "orderId",
+                  "customerId"
+                ]
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Seat reservation created successfully"
+            },
+            "403": {
+              "description": "Forbidden: Requires Customer or Admin role"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "SeatReservation"
+        ],
+        "summary": "Delete a seat reservation",
+        "description": "Allow customers or admins to delete a seat reservation.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "seatNumber",
+            "in": "query",
+            "required": true,
+            "description": "The number of the seat to delete from the reservation.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "orderId",
+            "in": "query",
+            "required": true,
+            "description": "The ID of the order associated with the reservation.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Seat reservation deleted successfully"
+          },
+          "403": {
+            "description": "Forbidden: Requires Customer or Admin role"
+          }
+        }
+      }
+    },
+    "/api/coupon": {
+      "get": {
+        "tags": [
+          "Coupon"
+        ],
+        "summary": "Get all coupons",
+        "description": "Retrieve a list of all available coupons.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of coupons",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Coupon"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden: Requires authentication"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Coupon"
+        ],
+        "summary": "Create a coupon",
+        "description": "Allow admins to create a new coupon.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "The unique code for the coupon."
+                  },
+                  "discount": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "The discount amount or percentage."
+                  },
+                  "expiryDate": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "The expiry date of the coupon."
+                  }
+                },
+                "required": [
+                  "code",
+                  "discount",
+                  "expiryDate"
+                ]
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Coupon created successfully"
+            },
+            "403": {
+              "description": "Forbidden: Requires Admin role"
+            }
+          }
+        }
+      }
+    },
+    "/api/coupon/{id}": {
+      "get": {
+        "tags": [
+          "Coupon"
+        ],
+        "summary": "Get a coupon by ID",
+        "description": "Retrieve details of a specific coupon by its ID.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the coupon to retrieve",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Coupon details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Coupon"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden: Requires Customer or Admin role"
+          },
+          "404": {
+            "description": "Coupon not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Coupon"
+        ],
+        "summary": "Update a coupon",
+        "description": "Allow admins to update an existing coupon.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the coupon to update",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "The unique code for the coupon."
+                  },
+                  "discount": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "The discount amount or percentage."
+                  },
+                  "expiryDate": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "The expiry date of the coupon."
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Coupon updated successfully"
+            },
+            "403": {
+              "description": "Forbidden: Requires Admin role"
+            },
+            "404": {
+              "description": "Coupon not found"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Coupon"
+        ],
+        "summary": "Delete a coupon",
+        "description": "Allow admins to delete a specific coupon by its ID.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the coupon to delete",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Coupon deleted successfully"
+          },
+          "403": {
+            "description": "Forbidden: Requires Admin role"
+          },
+          "404": {
+            "description": "Coupon not found"
+          }
+        }
+      }
+    },
+    "/api/cart-item": {
+      "get": {
+        "tags": [
+          "CartItem"
+        ],
+        "summary": "Get all cart items",
+        "description": "Retrieve all items in the user's cart.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of cart items",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CartItem"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden: Requires Customer role"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CartItem"
+        ],
+        "summary": "Add an item to the cart",
+        "description": "Allow customers to add an item to their cart.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productId": {
+                    "type": "integer",
+                    "description": "The ID of the product to add to the cart."
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "description": "The quantity of the product to add."
+                  }
+                },
+                "required": [
+                  "productId",
+                  "quantity"
+                ]
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Item added to the cart successfully"
+            },
+            "403": {
+              "description": "Forbidden: Requires Customer role"
+            }
+          }
+        }
+      }
+    },
+    "/api/cart-item/{id}": {
+      "put": {
+        "tags": [
+          "CartItem"
+        ],
+        "summary": "Update a cart item",
+        "description": "Allow customers to update the details of a cart item.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the cart item to update",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "quantity": {
+                    "type": "integer",
+                    "description": "The updated quantity of the product."
+                  }
+                },
+                "required": [
+                  "quantity"
+                ]
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Cart item updated successfully"
+            },
+            "403": {
+              "description": "Forbidden: Requires Customer role"
+            },
+            "404": {
+              "description": "Cart item not found"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "CartItem"
+        ],
+        "summary": "Delete a cart item",
+        "description": "Allow customers to remove an item from their cart.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the cart item to delete",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cart item deleted successfully"
+          },
+          "403": {
+            "description": "Forbidden: Requires Customer role"
+          },
+          "404": {
+            "description": "Cart item not found"
+          }
+        }
+      }
+    },
+    "/api/order": {
+      "get": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Get all orders",
+        "description": "Retrieve all orders for the user, with pagination support.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number for pagination.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Number of orders per page.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of orders",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Order"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden: Requires Customer or Admin role"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Create a new order",
+        "description": "Allow customers to create a new order.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "productId": {
+                          "type": "integer",
+                          "description": "The ID of the product."
+                        },
+                        "quantity": {
+                          "type": "integer",
+                          "description": "The quantity of the product."
+                        }
+                      },
+                      "required": [
+                        "productId",
+                        "quantity"
+                      ]
+                    }
+                  },
+                  "shippingAddress": {
+                    "type": "string",
+                    "description": "The shipping address for the order."
+                  }
+                },
+                "required": [
+                  "items",
+                  "shippingAddress"
+                ]
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Order created successfully"
+            },
+            "403": {
+              "description": "Forbidden: Requires Customer role"
+            }
+          }
+        }
+      }
+    },
+    "/api/order/{id}": {
+      "get": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Get an order by ID",
+        "description": "Retrieve details of a specific order by its ID.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the order to retrieve",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden: Requires Customer or Admin role"
+          },
+          "404": {
+            "description": "Order not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Update an order",
+        "description": "Allow customers to update an existing order.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the order to update",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "shippingAddress": {
+                    "type": "string",
+                    "description": "Updated shipping address."
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "Updated status of the order."
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Order updated successfully"
+            },
+            "403": {
+              "description": "Forbidden: Requires Customer role"
+            },
+            "404": {
+              "description": "Order not found"
+            }
+          }
+        }
+      }
+    },
+    "/api/order/cancel/{id}": {
+      "put": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Cancel an order",
+        "description": "Allow customers or admins to cancel an existing order.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the order to cancel",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order canceled successfully"
+          },
+          "403": {
+            "description": "Forbidden: Requires Customer or Admin role"
+          },
+          "404": {
+            "description": "Order not found"
+          }
+        }
+      }
+    },
+    "/api/payment": {
+      "get": {
+        "tags": [
+          "Payment"
+        ],
+        "summary": "Get all payments",
+        "description": "Retrieve all payments for a specific user.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "required": true,
+            "description": "The ID of the user whose payments are to be retrieved.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of payments",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Payment"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden: Requires Customer or Admin role"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Payment"
+        ],
+        "summary": "Create a new payment",
+        "description": "Allow customers to create a new payment.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "number",
+                    "description": "The amount to be paid."
+                  },
+                  "method": {
+                    "type": "string",
+                    "description": "Payment method (e.g., credit card, PayPal)."
+                  }
+                },
+                "required": [
+                  "amount",
+                  "method"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Payment created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Payment"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden: Requires Customer role"
+          }
+        }
+      }
+    },
+    "/api/payment/{id}": {
+      "put": {
+        "tags": [
+          "Payment"
+        ],
+        "summary": "Update a payment",
+        "description": "Allow customers to update an existing payment.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the payment to update",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "number",
+                    "description": "Updated amount."
+                  },
+                  "method": {
+                    "type": "string",
+                    "description": "Updated payment method."
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Payment updated successfully"
+            },
+            "403": {
+              "description": "Forbidden: Requires Customer role"
+            },
+            "404": {
+              "description": "Payment not found"
+            }
+          }
+        }
+      }
+    },
+    "/api/payment/create-payment-url": {
+      "post": {
+        "tags": [
+          "Payment"
+        ],
+        "summary": "Create a payment URL",
+        "description": "Generate a payment URL for processing payments.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "number",
+                    "description": "The amount to be processed."
+                  }
+                },
+                "required": [
+                  "amount"
+                ]
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Payment URL created successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "url": {
+                        "type": "string",
+                        "description": "The generated payment URL."
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden: Requires Customer role"
+            }
+          }
+        }
+      }
+    },
+    "/api/user/me": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get current user information",
+        "description": "Retrieve the details of the currently authenticated user.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User information retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden: Requires Customer or Admin role"
+          }
+        }
+      }
+    },
+    "/api/user": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get all users",
+        "description": "Retrieve a list of all users.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden: Requires Admin role"
+          }
+        }
+      }
+    },
+    "/api/user/change-password": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Change user password",
+        "description": "Allow users to change their password.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "currentPassword": {
+                    "type": "string",
+                    "description": "Current password of the user."
+                  },
+                  "newPassword": {
+                    "type": "string",
+                    "description": "New password for the user."
+                  }
+                },
+                "required": [
+                  "currentPassword",
+                  "newPassword"
+                ]
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Password changed successfully"
+            },
+            "403": {
+              "description": "Forbidden: Requires Customer role"
+            }
+          }
+        }
+      }
+    },
+    "/api/user/forgot-password": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Forgot password",
+        "description": "Allow users to initiate the forgot password process.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Forgot password process initiated"
+          },
+          "403": {
+            "description": "Forbidden: Requires Customer role"
+          }
+        }
+      }
+    },
+    "/api/user/{id}": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update user information",
+        "description": "Allow users to update their information.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the user to update",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "avatar": {
+                    "type": "string",
+                    "description": "Avatar image URL."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "User's name."
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "User's email."
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "User information updated successfully"
+            },
+            "403": {
+              "description": "Forbidden: Requires Customer or Admin role"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Delete a user",
+        "description": "Allow an admin to delete a user.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the user to delete",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted successfully"
+          },
+          "403": {
+            "description": "Forbidden: Requires Admin role"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get user by ID",
+        "description": "Retrieve information for a specific user.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the user to retrieve",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User information retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden: Requires Customer or Admin role"
+          }
+        }
+      }
+    },
+    "/auth/authenticate": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User Authentication",
+        "description": "Authenticate a user and receive access and refresh tokens.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "User's email address."
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "User's password."
+                  }
+                },
+                "required": [
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Tokens retrieved successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "accessToken": {
+                        "type": "string",
+                        "description": "Access token for authenticated requests."
+                      },
+                      "refreshToken": {
+                        "type": "string",
+                        "description": "Refresh token to obtain a new access token."
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid email or password"
+            }
+          }
+        }
+      }
+    },
+    "/auth/google": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Google Authentication",
+        "description": "Authenticate using Google OAuth.",
+        "responses": {
+          "302": {
+            "description": "Redirects to Google for authentication"
+          }
+        }
+      }
+    },
+    "/auth/google/callback": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Google Callback",
+        "description": "Callback endpoint for Google authentication.",
+        "responses": {
+          "200": {
+            "description": "User authenticated via Google"
+          },
+          "400": {
+            "description": "Authentication failed"
+          }
+        }
+      }
+    },
+    "/auth/github": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "GitHub Authentication",
+        "description": "Authenticate using GitHub OAuth.",
+        "responses": {
+          "302": {
+            "description": "Redirects to GitHub for authentication"
+          }
+        }
+      }
+    },
+    "/auth/github/callback": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "GitHub Callback",
+        "description": "Callback endpoint for GitHub authentication.",
+        "responses": {
+          "200": {
+            "description": "User authenticated via GitHub"
+          },
+          "400": {
+            "description": "Authentication failed"
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User Registration",
+        "description": "Register a new user account.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "User's full name."
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "User's email address."
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "User's password."
+                  }
+                },
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "User registered successfully"
+            },
+            "400": {
+              "description": "User already exists or invalid data"
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User Logout",
+        "description": "Logout a user and invalidate the refresh token.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User logged out successfully"
+          },
+          "403": {
+            "description": "Forbidden: Requires Customer or Admin role"
+          }
+        }
+      }
+    },
+    "/auth/refresh-token": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Refresh Access Token",
+        "description": "Obtain a new access token using a refresh token.",
+        "responses": {
+          "200": {
+            "description": "New access token retrieved successfully"
+          },
+          "400": {
+            "description": "Invalid refresh token"
+          }
         }
       }
     }
   },
   "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
     "schemas": {
       "Item": {
         "type": "object",
         "properties": {
-          "id": { "type": "integer" },
+          "id": {
+            "type": "integer"
+          },
           "categoryId": {
             "type": "integer",
             "description": "ID of the category this item belongs to"
@@ -194,7 +1981,10 @@
             "type": "string",
             "description": "URL to the item's thumbnail image"
           },
-          "name": { "type": "string", "description": "Name of the item" },
+          "name": {
+            "type": "string",
+            "description": "Name of the item"
+          },
           "description": {
             "type": "string",
             "description": "Detailed description of the item"
@@ -215,7 +2005,9 @@
           },
           "images": {
             "type": "array",
-            "items": { "type": "string" },
+            "items": {
+              "type": "string"
+            },
             "description": "Array of URLs to item images"
           },
           "rating": {
@@ -225,7 +2017,480 @@
             "description": "Rating of the item, maximum value of 5"
           }
         },
-        "required": ["categoryId", "thumbnail", "name", "price", "stock"]
+        "required": [
+          "categoryId",
+          "thumbnail",
+          "name",
+          "price",
+          "stock"
+        ]
+      },
+      "Category": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique identifier for the category",
+            "example": 1
+          },
+          "thumbnail": {
+            "type": "string",
+            "description": "The URL or path to the category's thumbnail image",
+            "example": "https://example.com/thumbnail.jpg"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the category",
+            "example": "Electronics"
+          },
+          "description": {
+            "type": "string",
+            "description": "A brief description of the category",
+            "example": "Devices and gadgets"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Item"
+            }
+          }
+        }
+      },
+      "CartItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique identifier for the cart item",
+            "example": 1
+          },
+          "userId": {
+            "type": "string",
+            "description": "The unique identifier for the user",
+            "example": "12345"
+          },
+          "itemId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique identifier for the item",
+            "example": 101
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "The quantity of the item in the cart",
+            "example": 2
+          },
+          "item": {
+            "type": "object",
+            "$ref": "#/components/schemas/Item"
+          }
+        }
+      },
+      "Coupon": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique identifier for the coupon",
+            "example": 1
+          },
+          "code": {
+            "type": "string",
+            "description": "The code for the coupon",
+            "example": "SUMMER2024"
+          },
+          "title": {
+            "type": "string",
+            "description": "The title of the coupon",
+            "example": "Summer Sale Discount"
+          },
+          "discountPercentage": {
+            "type": "number",
+            "format": "float",
+            "description": "The discount percentage offered by the coupon",
+            "example": 15
+          },
+          "expirationDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The expiration date of the coupon in ISO 8601 format",
+            "example": "2024-12-31T23:59:59Z"
+          },
+          "usedQuantity": {
+            "type": "integer",
+            "description": "The number of times the coupon has been used",
+            "example": 5
+          },
+          "usageLimit": {
+            "type": "integer",
+            "description": "The maximum number of times the coupon can be used",
+            "example": 10
+          }
+        }
+      },
+      "Order": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique identifier for the order",
+            "example": 1
+          },
+          "userId": {
+            "type": "string",
+            "description": "The unique identifier for the user",
+            "example": "12345"
+          },
+          "orderDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date the order was placed in ISO 8601 format",
+            "example": "2024-10-31T10:00:00Z"
+          },
+          "couponCode": {
+            "type": "string",
+            "description": "The code for any coupon applied to the order",
+            "example": "SUMMER2024"
+          },
+          "couponTitle": {
+            "type": "string",
+            "description": "The title of the coupon applied to the order",
+            "example": "Summer Sale Discount"
+          },
+          "discountPercentage": {
+            "type": "number",
+            "format": "float",
+            "description": "The discount percentage applied to the order",
+            "example": 15
+          },
+          "total": {
+            "type": "number",
+            "format": "float",
+            "description": "The total amount for the order after discounts",
+            "example": 85
+          },
+          "seatNumber": {
+            "type": "integer",
+            "description": "The seat number associated with the order",
+            "example": 10
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Pending",
+              "Success",
+              "Cancel",
+              "Error"
+            ],
+            "description": "The current status of the order",
+            "example": "Pending"
+          },
+          "orderItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderItem"
+            }
+          },
+          "payment": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Payment"
+            }
+          }
+        }
+      },
+      "OrderItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique identifier for the order item",
+            "example": 1
+          },
+          "itemId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique identifier for the item",
+            "example": 101
+          },
+          "orderId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique identifier for the order",
+            "example": 1
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "The quantity of the item in the order",
+            "example": 2
+          },
+          "price": {
+            "type": "number",
+            "format": "float",
+            "description": "The price of the item",
+            "example": 29.99
+          },
+          "item": {
+            "type": "object",
+            "$ref": "#/components/schemas/Item"
+          }
+        }
+      },
+      "Payment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique identifier for the payment",
+            "example": 1
+          },
+          "userId": {
+            "type": "string",
+            "description": "The unique identifier for the user",
+            "example": "12345"
+          },
+          "orderId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique identifier for the order",
+            "example": 1
+          },
+          "payDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date the payment was made in ISO 8601 format",
+            "example": "2024-10-31T10:00:00Z"
+          },
+          "bankCode": {
+            "type": "string",
+            "description": "The bank code used for the payment",
+            "example": "XYZ123"
+          },
+          "cardType": {
+            "type": "string",
+            "description": "The type of card used for the payment",
+            "example": "Visa"
+          },
+          "amount": {
+            "type": "number",
+            "format": "float",
+            "description": "The amount paid",
+            "example": 29.99
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Pending",
+              "Success",
+              "Cancel",
+              "Error"
+            ],
+            "description": "The current status of the payment",
+            "example": "Success"
+          },
+          "user": {
+            "type": "object",
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "Review": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique identifier for the review",
+            "example": 1
+          },
+          "orderItemId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique identifier for the order item being reviewed",
+            "example": 1
+          },
+          "userId": {
+            "type": "string",
+            "description": "The unique identifier for the user who made the review",
+            "example": "12345"
+          },
+          "rating": {
+            "type": "integer",
+            "description": "The rating given by the user (1 to 5)",
+            "example": 5
+          },
+          "description": {
+            "type": "string",
+            "description": "The content of the review",
+            "example": "Great product!"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "An array of image URLs related to the review",
+            "example": [
+              "https://example.com/image1.jpg",
+              "https://example.com/image2.jpg"
+            ]
+          },
+          "createAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date the review was created in ISO 8601 format",
+            "example": "2024-10-31T10:00:00Z"
+          },
+          "user": {
+            "type": "object",
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "SeatReservation": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique identifier for the seat reservation",
+            "example": 1
+          },
+          "orderId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique identifier for the associated order",
+            "example": 1
+          },
+          "seatNumber": {
+            "type": "integer",
+            "description": "The seat number reserved",
+            "example": 10
+          }
+        }
+      },
+      "Token": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The unique identifier for the token",
+            "example": 1
+          },
+          "userId": {
+            "type": "string",
+            "description": "The unique identifier for the user associated with the token",
+            "example": "12345"
+          },
+          "token": {
+            "type": "string",
+            "description": "The token string",
+            "example": "abcd1234xyz"
+          },
+          "expirationDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The expiration date of the token in ISO 8601 format",
+            "example": "2024-12-31T23:59:59Z"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the user",
+            "example": "12345"
+          },
+          "email": {
+            "type": "string",
+            "description": "The email address of the user",
+            "example": "user@example.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "The password of the user (hashed)",
+            "example": "hashed_password_here"
+          },
+          "provider": {
+            "type": "string",
+            "enum": [
+              "google",
+              "github",
+              "default"
+            ],
+            "description": "The authentication provider for the user",
+            "example": "default"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "The phone number of the user",
+            "example": "+1234567890"
+          },
+          "fullName": {
+            "type": "string",
+            "description": "The full name of the user",
+            "example": "John Doe"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "The URL of the user's avatar image",
+            "example": "https://example.com/avatar.jpg"
+          },
+          "gender": {
+            "type": "string",
+            "enum": [
+              "Male",
+              "Female",
+              "Other"
+            ],
+            "description": "The gender of the user",
+            "example": "Male"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The user's date of birth in ISO 8601 format",
+            "example": "1990-01-01T00:00:00Z"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "Customer",
+              "Admin",
+              "Employee"
+            ],
+            "description": "The role of the user in the system",
+            "example": "Customer"
+          },
+          "cartItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CartItem"
+            }
+          },
+          "orders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Order"
+            }
+          },
+          "payments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Payment"
+            }
+          }
+        }
       }
     }
   }
