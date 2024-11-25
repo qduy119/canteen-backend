@@ -1,10 +1,9 @@
 import { Application, Router } from 'express';
 import { protect, restrictTo } from '@/middlewares/auth';
 import { UserController } from '@/controllers';
-import { myContainer } from '@/container/inversify.config';
 import { IUserService } from '@/services/user/user.service';
-import { TYPES } from '@/container/types';
 import { imageUpload } from '@/utils/upload';
+import { myContainer, TYPES } from '@/container';
 
 export const configure = (app: Application) => {
   const router = Router({ mergeParams: true });

@@ -2,7 +2,7 @@ import envConfig from '@/config';
 import winston from 'winston';
 import 'winston-daily-rotate-file';
 
-const { combine, timestamp, printf } = winston.format;
+const { combine, timestamp, json } = winston.format;
 
 export const logger = winston.createLogger({
   level: envConfig.LOG_LEVEL,
@@ -10,9 +10,7 @@ export const logger = winston.createLogger({
     timestamp({
       format: 'YYYY-MM-DD hh:mm:ss.SSS A'
     }),
-    printf(({ level, message, context, requestId, timestamp, metadata }) => {
-      return `${timestamp}::${level}::${context}::${requestId}::${message}::${JSON.stringify(metadata)}}`;
-    })
+    json()
   ),
   transports: [
     new winston.transports.Console(),
@@ -28,11 +26,7 @@ export const logger = winston.createLogger({
           timestamp({
             format: 'YYYY-MM-DD hh:mm:ss.SSS A'
           }),
-          printf(
-            ({ level, message, context, requestId, timestamp, metadata }) => {
-              return `${timestamp}::${level}::${context}::${requestId}::${message}::${JSON.stringify(metadata)}}`;
-            }
-          )
+          json()
         ),
         level
       });

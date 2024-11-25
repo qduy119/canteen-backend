@@ -32,7 +32,7 @@ import { ISeatReservationService } from '@/services/seat-reservation/seat-reserv
 import { ITokenService } from '@/services/token/token.service';
 import { IUserService } from '@/services/user/user.service';
 
-const myContainer = new Container({ defaultScope: 'Singleton' });
+export const myContainer = new Container({ defaultScope: 'Singleton' });
 
 myContainer.bind<IAuthService>(TYPES.AuthService).to(AuthServiceImpl);
 myContainer
@@ -68,5 +68,3 @@ myContainer
   .to(SeatReservationServiceImpl);
 myContainer.bind<ITokenService>(TYPES.TokenService).to(TokenServiceImpl);
 myContainer.bind<IUserService>(TYPES.UserService).to(UserServiceImpl);
-
-export { myContainer };

@@ -4,7 +4,6 @@ name: canteen-backend
 services:
   canteen-postgres:
     image: postgres
-    restart: always
     environment:
       - POSTGRES_PASSWORD=postgres
     container_name: postgres
@@ -15,11 +14,11 @@ services:
     networks:
       - canteen-network
 
-  canteen-app:
+  app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: canteen-app-container
+    container_name: app-container
     ports:
       - '3000:3000'
     depends_on:
@@ -31,8 +30,7 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
-    restart: always
-    container_name: canteen-pgadmin4
+    container_name: pgadmin4
     environment:
       - PGADMIN_DEFAULT_EMAIL=pg4@admin.com
       - PGADMIN_DEFAULT_PASSWORD=admin
@@ -46,9 +44,18 @@ services:
     networks:
       - canteen-network
 
+  redis-insights:
+    image: redis/redisinsight
+    container_name: canteen-redisinsight
+    ports:
+      - "5540:5540"
+    volumes:
+      - redis-insights:/data
+
 volumes:
   pgdata:
   pgadmin_data:
+  redis-insights:
 
 networks:
   canteen-network:

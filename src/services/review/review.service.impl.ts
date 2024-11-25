@@ -3,6 +3,7 @@ import { IReviewService } from './review.service';
 import { OrderItem, Review, User } from '@/databases/models';
 import { injectable } from 'inversify';
 import { IFoodService } from '../food/food.service';
+import { client } from '@/utils';
 
 @injectable()
 export default class ReviewServiceImpl implements IReviewService {
@@ -34,6 +35,9 @@ export default class ReviewServiceImpl implements IReviewService {
   async create(payload: ReviewCreateDto): Promise<void> {
     const { rating: reviewRating, orderItemId } = payload;
     await Review.create(payload);
+    if (client.isReady) {
+      await client.set(`rated:${orderItemId}`, 1, { EX: 300 });
+    }
 
     const { itemId } = await OrderItem.findOne({
       where: { id: orderItemId }
@@ -58,7 +62,23 @@ export default class ReviewServiceImpl implements IReviewService {
     });
   }
   async isRated(orderItemId: number): Promise<{ isRated: boolean }> {
+    if (client.isReady) {
+      const rated = await client.exists(`rated:${orderItemId}`);
+      if (rated) {
+        return {
+          isRated: Boolean(Number(await client.get(`rated:${orderItemId}`)))
+        };
+      }
+    }
     const data = await Review.findOne({ where: { orderItemId } });
-    return { isRated: Boolean(data) };
+    if (client.isReady) {
+      await client.set(`rated:${orderItemId}`, data ? 1 : 0, {
+        EX: 300,
+        NX: true
+      });
+      return {
+        isRated: Boolean(Number(await client.get(`rated:${orderItemId}`)))
+      };
+    }
   }
 }

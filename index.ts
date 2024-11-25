@@ -4,9 +4,8 @@ import 'module-alias/register';
 
 import { Application } from './application';
 import { server } from '@/server';
-import { logger } from '@/utils/logger';
-import { connectToDatabase } from '@/utils/connect';
 import envConfig from '@/config';
+import { connectToDatabase, connectToRedis, logger } from '@/utils';
 
 (async () => {
   try {
@@ -16,6 +15,7 @@ import envConfig from '@/config';
       port: PORT
     });
     await connectToDatabase();
+    await connectToRedis();
 
     // Start/Stop server
     Application.instance.start();

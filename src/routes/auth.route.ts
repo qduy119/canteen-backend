@@ -2,9 +2,8 @@ import passport from 'passport';
 import { Application, Router } from 'express';
 import { protect, restrictTo } from '@/middlewares/auth';
 import { AuthController } from '@/controllers';
-import { myContainer } from '@/container/inversify.config';
 import { IAuthService } from '@/services/auth/auth.service';
-import { TYPES } from '@/container/types';
+import { myContainer, TYPES } from '@/container';
 
 export const configure = (app: Application) => {
   const router = Router({ mergeParams: true });

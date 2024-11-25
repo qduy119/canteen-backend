@@ -1,9 +1,8 @@
 import { Application, Router } from 'express';
 import { protect, restrictTo } from '@/middlewares/auth';
 import { CartItemController } from '@/controllers';
-import { myContainer } from '@/container/inversify.config';
 import { ICartItemService } from '@/services/cart-item/cart-item.service';
-import { TYPES } from '@/container/types';
+import { myContainer, TYPES } from '@/container';
 
 export const configure = (app: Application) => {
   const router = Router({ mergeParams: true });

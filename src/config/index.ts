@@ -1,6 +1,5 @@
 import('dotenv/config');
-import { CustomError } from '@/utils/error';
-import { logger } from '@/utils/logger';
+import { CustomError, logger } from '@/utils';
 import fs from 'fs';
 import path from 'path';
 import { z } from 'zod';
@@ -61,7 +60,9 @@ export const configSchema = z.object({
 
   GMAIL_USERNAME: z.string(),
   GMAIL_PASSWORD: z.string(),
-  GMAIL_FROM: z.string()
+  GMAIL_FROM: z.string(),
+
+  REDIS_CONNECTION_URL: z.string(),
 });
 
 const configServer = configSchema.safeParse(process.env);
