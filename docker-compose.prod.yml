@@ -1,0 +1,17 @@
+version: '3.8'
+name: canteen-backend-prod
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app-container
+    ports:
+      - '3000:3000'
+    networks:
+      - canteen-network
+
+networks:
+  canteen-network:
+    driver: bridge

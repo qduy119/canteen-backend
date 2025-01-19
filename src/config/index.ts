@@ -34,6 +34,7 @@ export const configSchema = z.object({
   DB_DATABASE: z.string(),
   DB_HOST: z.string(),
   DB_PORT: z.coerce.number().default(5432),
+  DB_CONNECTION_URI: z.string(),
 
   ACCESS_TOKEN_SECRET: z.string(),
   ACCESS_TOKEN_EXPIRATION: z.string(),

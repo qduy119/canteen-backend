@@ -1,13 +1,13 @@
 import { z } from 'zod';
-import { User } from '@/databases/models';
+import type { User as IUser } from '@/databases/models';
 import { configSchema } from '@/config';
-
-type UserDocument = User;
 
 declare global {
   namespace Express {
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+    interface User extends IUser {}
     interface Request {
-      user?: UserDocument;
+      user?: User;
     }
   }
 
