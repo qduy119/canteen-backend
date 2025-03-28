@@ -89,6 +89,9 @@ export default class AuthServiceImpl implements IAuthService {
     if (!found) {
       throw new CustomError(400, 'Refresh token is not found');
     }
+    if (Date.now() > found.expirationDate.getTime()) {
+      throw new CustomError(400, 'Refresh token is invalid');
+    }
     const accessToken = genAccessToken(payload);
     return { accessToken };
   }
